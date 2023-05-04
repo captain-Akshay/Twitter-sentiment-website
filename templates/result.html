@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tweet Sentiment Prediction Result</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+<style>
+        @keyframes rotate-y {
+        from { transform: rotateY(0); }
+        to { transform: rotateY(360deg); }
+    }
+    .twitter-negative {
+        content: "";
+        display: block;
+        margin-left: 0px;
+        width: 300px;
+        height: 300px;
+        background-image: url('static/twitterRed.png');
+        background-size: contain;
+        background-color: #252324;
+        border-radius: 50%;
+        background-repeat: no-repeat;
+        transform-style: preserve-3d;
+        animation: rotate-y 5s linear infinite;
+    }
+    .twitter-positive {
+        content: "";
+        display: block;
+        margin-left: -75px;
+        width: 300px;
+        height: 300px;
+        background-image: url('static/twitterGreen.png');
+        background-size: contain;
+        background-color: #252324;
+        border-radius: 50%;
+        background-repeat: no-repeat;
+        transform-style: preserve-3d;
+        animation: rotate-y 5s linear infinite;
+    }
+    .result-box {
+        width: 250%;
+        height: 80%;
+        padding: 1rem;
+        margin-left:-200px;
+        box-shadow: 10px 10px 50px rgba(0, 0, 0, 0.5);
+        transform-style: preserve-3d;
+        transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+        border-radius: 1rem;
+    }
+    .result-box-inner {
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color:#000;
+
+    }
+    .result-box h2 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+    .result-box p {
+        font-size: 1.2rem;
+    }
+</style>
+<body {% if sentiment > 0.5 %} class="bg-success text-white" {% else %} class="bg-danger text-white" {% endif %}>
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="twitter-box {% if sentiment > 0.5 %} twitter-positive {% else %} twitter-negative {% endif %}">
+                </div>
+                <div class="result-box mt-3">
+                    <div class="result-box-inner">
+                        <h2>Tweet Sentiment Prediction Result</h2>
+                        <p>You entered the following tweet:</p>
+                        <p>{{ tweet }}</p>
+                        {% if sentiment > 0.5 %}
+                            <p>The predicted sentiment is: Positive</p>
+                        {% else %}
+                            <p>The predicted sentiment is: Negative</p>
+                        {% endif %}
+                        <form method="GET" action="/">
+                <div class="form-group">
+            <button type="submit" class="btn {% if sentiment > 0.5 %} btn-success {% else %} btn-outline-danger {% endif %} btn-rounded waves-effect">Try</button>
+            </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
